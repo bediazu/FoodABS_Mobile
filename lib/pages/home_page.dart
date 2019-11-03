@@ -4,6 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:foodabs/colors/global_colors.dart';
 
 import 'package:foodabs/models/classes/user.dart';
+import 'package:foodabs/pages/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
@@ -34,9 +35,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-      ),
       body: Container(
         height: double.infinity,
         width: double.infinity,
@@ -46,14 +44,14 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             Icon(Icons.list),
             Icon(Icons.add),
-            Icon(Icons.clear),
+            ProfilePage(),
           ],
         ),
       ),
       bottomNavigationBar: CurvedNavigationBar(
         index: _page,
         animationDuration: Duration(milliseconds: 500),
-        backgroundColor: Colors.white,
+        backgroundColor: homeBackgroundColor,
         color: Colors.red,
         items: <Widget>[
           Icon(
