@@ -29,7 +29,7 @@ class MyAppBar extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    'Complete courses about the best tools and design systems',
+                    'Clasificador de comida basado en aprendizaje automatico',
                     style: loginMessageSubTitle,
                     textAlign: TextAlign.center,
                   )
