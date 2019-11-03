@@ -3,9 +3,7 @@ import 'package:foodabs/blocs/login_bloc/login_bloc.dart';
 import 'package:foodabs/colors/global_colors.dart';
 import 'package:foodabs/styles/text_styles.dart';
 
-
 class FormLogin extends StatelessWidget {
-
   final LoginBloc loginBloc;
 
   FormLogin({this.loginBloc});

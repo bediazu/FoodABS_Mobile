@@ -15,11 +15,10 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-
         //TODO
-    '/': (context) => LoginPage(),
-    '/homePage': (context) => HomePage(),
-  },
+        '/': (context) => LoginPage(),
+        '/homePage': (context) => HomePage(),
+      },
     );
   }
 }
