@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final Color loginBackgroundColor = new Color(0xFAFAFA);
+final Color loginBackgroundColor = new Color(0xFCFCFC);
 
 final Color loginEmailColor = Colors.red;
 final Color loginPasswordColor = Colors.red;
