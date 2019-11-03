@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodabs/colors/global_colors.dart';
 import 'package:foodabs/shapes/app_bar_profile_custom_painter.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -33,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: CircleAvatar(
                         backgroundImage: AssetImage(
                             "assets/images/profile/profile_avatar.png"),
-                        backgroundColor: Colors.white,
+                        backgroundColor: homeBackgroundColor,
                       ),
                     )
                   ],
