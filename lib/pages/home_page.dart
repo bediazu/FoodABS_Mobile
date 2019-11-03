@@ -15,8 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  
   int _page = 0;
   PageController _pageController;
 
@@ -25,17 +23,16 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     _pageController = PageController();
-    
-    _pageController.addListener((){
+
+    _pageController.addListener(() {
       setState(() {
-       _page = _pageController.page.toInt(); 
+        _page = _pageController.page.toInt();
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
@@ -59,17 +56,30 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         color: Colors.red,
         items: <Widget>[
-          Icon(Icons.list, size: 30, color: Colors.white,),
-          Icon(Icons.add, size: 30, color: Colors.white,),
-          Icon(Icons.account_circle, size: 30, color: Colors.white,),
+          Icon(
+            Icons.list,
+            size: 30,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.add,
+            size: 30,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.account_circle,
+            size: 30,
+            color: Colors.white,
+          ),
         ],
         onTap: (index) {
           print(index);
-            setState(() {
-              _page = index;
-            });
-            _pageController.animateToPage(_page, curve: Curves.decelerate, duration: Duration(milliseconds: 500));
-          },
+          setState(() {
+            _page = index;
+          });
+          _pageController.animateToPage(_page,
+              curve: Curves.decelerate, duration: Duration(milliseconds: 500));
+        },
       ),
     );
   }

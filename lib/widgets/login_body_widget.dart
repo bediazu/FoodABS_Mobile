@@ -1,24 +1,75 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:foodabs/blocs/login_bloc/login_bloc.dart';
 import 'package:foodabs/colors/global_colors.dart';
-import 'package:foodabs/models/classes/user.dart';
-import 'package:foodabs/pages/home_page.dart';
-import 'package:foodabs/shapes/app_bar_shape.dart';
 import 'package:foodabs/styles/text_styles.dart';
+import 'package:foodabs/widgets/login/animated_picture_widget.dart';
+import 'package:foodabs/widgets/login/form_login_widget.dart';
 import 'dart:math';
 
-class MyLoginWidget extends StatefulWidget {
+import 'login/app_bar_login_widget.dart';
+import 'login/buttons_login_widget.dart';
+
+class LoginBody extends StatefulWidget {
   @override
-  _MyLoginWidgetState createState() => _MyLoginWidgetState();
+  _LoginBodyState createState() => _LoginBodyState();
 }
 
-class _MyLoginWidgetState extends State<MyLoginWidget> {
+class _LoginBodyState extends State<LoginBody> {
   double _offsetImage;
   double _offsetImageTop, _offsetImagePadding;
 
   String _currentTitle;
   ScrollController _scrollController;
+
+  final LoginBloc _loginBloc = LoginBloc();
+
+  Widget _titleListView() => Padding(
+        padding: const EdgeInsets.only(left: 32, right: 150, top: 50),
+        child: Text(
+          'Login In to',
+          style: loginInTo,
+        ),
+      );
+
+  Widget _subtitleListView() => Padding(
+        padding: const EdgeInsets.only(left: 32.0),
+        child: Text(
+          'Start...',
+          style: startMessage,
+        ),
+      );
+
+  Widget _listView() => ListView(
+        controller: _scrollController,
+        children: <Widget>[
+          _titleListView(),
+          _subtitleListView(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 60.0, horizontal: 25),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white70,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 15.0,
+                      offset: Offset(0.0, 0.75))
+                ],
+              ),
+              width: double.infinity,
+              child: FormLogin(
+                loginBloc: _loginBloc,
+              ),
+            ),
+          ),
+          SizedBox(height: _offsetImagePadding),
+          ButtonsLogin(
+              loginBloc: _loginBloc,
+              emailController: _loginBloc.emailController,
+              passwordController: _loginBloc.passwordController),
+        ],
+      );
 
   @override
   void initState() {
@@ -29,6 +80,10 @@ class _MyLoginWidgetState extends State<MyLoginWidget> {
 
     _currentTitle = 'FoodABS';
     _scrollController = ScrollController();
+
+    _loginBloc.emailController = TextEditingController();
+    _loginBloc.passwordController = TextEditingController();
+
     _scrollController.addListener(() {
       if (_scrollController.offset <= 50) {
         setState(() {
@@ -56,213 +111,19 @@ class _MyLoginWidgetState extends State<MyLoginWidget> {
           color: loginBackgroundColor,
           child: Column(
             children: <Widget>[
-              ClipPath(
-                clipper: AppBarShapeClipper(),
-                child: Container(
-                  height: height * 0.3,
-                  color: Colors.red,
-                  child: SafeArea(
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16.0, right: 16.0, bottom: 50.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              _currentTitle,
-                              style: loginMessageTitle,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              'Complete courses about the best tools and design systems',
-                              style: loginMessageSubTitle,
-                              textAlign: TextAlign.center,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+              MyAppBar(
+                currentTitle: _currentTitle,
+                height: height,
               ),
               Container(
                 child: Expanded(
                   child: Stack(
                     children: <Widget>[
-                      AnimatedPositioned(
-                        duration: Duration(milliseconds: 1000),
-                        curve: Curves.decelerate,
-                        height: 170 + _offsetImage,
-                        width: 170 + _offsetImage,
-                        right: 30 + _offsetImage - 20,
-                        top: 10 + _offsetImageTop,
-                        child: ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                              loginBackgroundColor.withOpacity(0.4),
-                              BlendMode.dstATop),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image:
-                                        AssetImage("assets/images/login.png"))),
-                          ),
-                        ),
+                      AnimatedPicture(
+                        offsetImage: _offsetImage,
+                        offsetImageTop: _offsetImageTop,
                       ),
-                      ListView(
-                        controller: _scrollController,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 32, right: 150, top: 50),
-                            child: Text(
-                              'Login In to',
-                              style: loginInTo,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 32.0),
-                            child: Text(
-                              'Start...',
-                              style: startMessage,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 60.0, horizontal: 25),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white70,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                      color: Colors.black12,
-                                      blurRadius: 15.0,
-                                      offset: Offset(0.0, 0.75))
-                                ],
-                              ),
-                              width: double.infinity,
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 16.0, top: 16.0),
-                                        child: Icon(Icons.email,
-                                            color: loginEmailColor),
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 12.0, right: 16.0),
-                                          child: TextField(
-                                            decoration: new InputDecoration(
-                                                hintText: 'Email',
-                                                hintStyle: hintEmailLogin),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 16.0, top: 16.0),
-                                        child: Icon(
-                                          Icons.lock,
-                                          color: loginPasswordColor,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 12.0,
-                                              right: 16.0,
-                                              top: 16,
-                                              bottom: 25),
-                                          child: TextField(
-                                            decoration: new InputDecoration(
-                                                hintText: 'Password',
-                                                hintStyle: hintPasswordLogin),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: _offsetImagePadding,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 32),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                RaisedButton(
-                                  color: loginButton,
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text(
-                                        'Login ',
-                                        style: buttonLogin,
-                                      ),
-                                      Icon(
-                                        Icons.check,
-                                        color: Colors.green,
-                                      )
-                                    ],
-                                  ),
-                                  onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(
-                                      builder: (BuildContext context) => HomePage(user: User(name: 'Bruno D', uuid: '200'),)
-                                    ));
-                                  },
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    RaisedButton(
-                                      color: loginGoogleButton,
-                                      child: Row(
-                                        children: <Widget>[
-                                          Icon(
-                                            FontAwesomeIcons.google,
-                                            size: 16,
-                                            color: loginGoogleIcon,
-                                          )
-                                        ],
-                                      ),
-                                      onPressed: () {},
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 8.0, right: 32),
-                                      child: RaisedButton(
-                                        color: Colors.blue,
-                                        child: Row(
-                                          children: <Widget>[
-                                            Icon(FontAwesomeIcons.facebook,
-                                                size: 16,
-                                                color: loginFacebookIcon)
-                                          ],
-                                        ),
-                                        onPressed: () {},
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                      _listView()
                     ],
                   ),
                 ),
