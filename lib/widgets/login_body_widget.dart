@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:foodabs/colors/global_colors.dart';
+import 'package:foodabs/models/classes/user.dart';
+import 'package:foodabs/pages/home_page.dart';
 import 'package:foodabs/shapes/app_bar_shape.dart';
 import 'package:foodabs/styles/text_styles.dart';
 import 'dart:math';
@@ -218,7 +220,11 @@ class _MyLoginWidgetState extends State<MyLoginWidget> {
                                       )
                                     ],
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (BuildContext context) => HomePage(user: User(name: 'Bruno D', uuid: '200'),)
+                                    ));
+                                  },
                                 ),
                                 Row(
                                   children: <Widget>[

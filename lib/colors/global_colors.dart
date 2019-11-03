@@ -9,3 +9,6 @@ final Color loginGoogleButton = Colors.red;
 final Color loginGoogleIcon = Colors.white;
 final Color loginFacebookButton = new Color(0x29487D);
 final Color loginFacebookIcon = Colors.white;
+
+
+final Color homeBackgroundColor = new Color(0xFCFCFC);
