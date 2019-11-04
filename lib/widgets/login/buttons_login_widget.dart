@@ -46,9 +46,22 @@ class ButtonsLogin extends StatelessWidget {
               } else {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => HomePage(
-                              user: User(name: 'Bruno D', uuid: '200'),
+                    PageRouteBuilder(
+                        pageBuilder: (BuildContext context,
+                                Animation<double> animation,
+                                Animation<double> secondaryAnimation) =>
+                            HomePage(
+                              user: User(name: 'Bruno', uuid: '2020'),
+                            ),
+                        transitionsBuilder: (
+                          BuildContext context,
+                          Animation<double> animation,
+                          Animation<double> secondaryAnimation,
+                          Widget child,
+                        ) =>
+                            FadeTransition(
+                              opacity: animation,
+                              child: child,
                             )));
               }
             },

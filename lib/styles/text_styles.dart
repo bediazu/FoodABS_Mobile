@@ -69,3 +69,10 @@ TextStyle hintHeight = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.normal,
     color: Colors.blueGrey);
+
+final TextStyle avatarCategorie = new TextStyle(
+  fontFamily: 'Awaita',
+  fontSize: 30,
+  fontWeight: FontWeight.bold,
+  color: Colors.white,
+);
