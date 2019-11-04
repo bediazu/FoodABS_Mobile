@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             Icon(Icons.list),
             Icon(Icons.add),
-            ProfilePage(),
+            ProfilePage(user: widget.user,),
           ],
         ),
       ),
