@@ -38,7 +38,22 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
     Top.longHairStraight2(),
     Top.longHairStraightStrand(),
     Top.noHair(),
-    Top.shortHairDreads01()
+    Top.shortHairDreads01(),
+    Top.shortHairDreads02(),
+    Top.shortHairFrizzle(),
+    Top.shortHairShaggyMullet(),
+    Top.shortHairShortCurly(),
+    Top.shortHairShortFlat(),
+    Top.shortHairShortRound(),
+    Top.shortHairShortWaved(),
+    Top.shortHairSides(),
+    Top.shortHairTheCaesar(),
+    Top.shortHairTheCaesarSidePart(),
+    Top.turban(),
+    Top.winterHat1(),
+    Top.winterHat2(),
+    Top.winterHat3(),
+    Top.winterHat4(),
   ];
 
 
@@ -62,7 +77,22 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
     Top.longHairStraight2().pieces?.first.toString(),
     Top.longHairStraightStrand().pieces?.first.toString(),
     Top.noHair().pieces?.first.toString(),
-    Top.shortHairDreads01().pieces?.first.toString()
+    Top.shortHairDreads01().pieces?.first.toString(),
+    Top.shortHairDreads02().pieces?.first.toString(),
+    Top.shortHairFrizzle().pieces?.first.toString(),
+    Top.shortHairShaggyMullet().pieces?.first.toString(),
+    Top.shortHairShortCurly().pieces?.first.toString(),
+    Top.shortHairShortFlat().pieces?.first.toString(),
+    Top.shortHairShortRound().pieces?.first.toString(),
+    Top.shortHairShortWaved().pieces?.first.toString(),
+    Top.shortHairSides().pieces?.first.toString(),
+    Top.shortHairTheCaesar().pieces?.first.toString(),
+    Top.shortHairTheCaesarSidePart().pieces?.first.toString(),
+    Top.turban().pieces?.first.toString(),
+    Top.winterHat1().pieces?.first.toString(),
+    Top.winterHat2().pieces?.first.toString(),
+    Top.winterHat3().pieces?.first.toString(),
+    Top.winterHat4().pieces?.first.toString(),
   ];
 
   @override
@@ -72,6 +102,7 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
     Future.delayed(const Duration(milliseconds: 300), () {
       setState(() {
         _white = true;
+        _selectedSliderOne = valueIndex().toDouble();
       });
     });
   }
@@ -173,9 +204,9 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
                                   });
                                 },
                                 label:
-                                    miList[_selectedSliderOne.toInt()].replaceAll(RegExp('Type.'), ''),
+                                    miList[_selectedSliderOne.toInt()].replaceAll(RegExp('TopType.'), ''),
                                 value: _selectedSliderOne,
-                                max: miList.length.toDouble(),
+                                max: miList.length.toDouble()-1,
                                 min: 0,
                                 divisions: miList.length,
                                 activeColor: Colors.blue,
