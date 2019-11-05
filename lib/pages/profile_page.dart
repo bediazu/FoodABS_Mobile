@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:foodabs/colors/global_colors.dart';
 import 'package:foodabs/models/classes/user.dart';
 import 'package:foodabs/pages/avatar_intro_page.dart';
 import 'package:foodabs/shapes/app_bar_profile_custom_painter.dart';
@@ -9,6 +8,8 @@ import 'package:foodabs/styles/text_styles.dart';
 
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:polygon_clipper/polygon_clipper.dart';
+
+import 'package:avataaar_image/avataaar_image.dart';
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -26,15 +27,18 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   void initState() {
+    super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(() {
       setState(() {
         _currentIndex = _tabController.index;
       });
     });
-
-    super.initState();
+    _randomizeAvatar();
   }
+  void _randomizeAvatar() =>  widget.user.avatar = Avataaar.random(
+    style: Style.transparent
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -93,11 +97,14 @@ class _ProfilePageState extends State<ProfilePage>
                               },
                               child: Hero(
                                 tag: 'usuario',
-                                child: CircleAvatar(
-                                  backgroundImage: AssetImage(
-                                      "assets/images/profile/profile_avatar.png"),
-                                  backgroundColor: homeBackgroundColor,
-                                ),
+                                child: Container(
+                                  child: AvataaarImage(
+                                    avatar: widget.user.avatar,
+                                    errorImage: Icon(Icons.error),
+                                    placeholder: CircularProgressIndicator(),
+                                    width: 280
+                                  ),
+                                )
                               )),
                         ),
                         Padding(
@@ -223,6 +230,11 @@ class _ProfilePageState extends State<ProfilePage>
                               Icon(Icons.add)
                             ],
                           ),
+                        ),
+                        FloatingActionButton(
+                          onPressed: (){
+                            setState(_randomizeAvatar);
+                          },
                         )
                       ],
                     ),

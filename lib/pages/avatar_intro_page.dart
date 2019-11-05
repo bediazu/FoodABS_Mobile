@@ -1,5 +1,5 @@
+import 'package:avataaar_image/avataaar_image.dart';
 import 'package:flutter/material.dart';
-import 'package:foodabs/colors/global_colors.dart';
 import 'package:foodabs/models/classes/user.dart';
 
 import 'package:foodabs/styles/text_styles.dart';
@@ -8,6 +8,7 @@ class AvatarIntroPage extends StatefulWidget {
   final User user;
 
   const AvatarIntroPage({Key key, this.user}) : super(key: key);
+
   @override
   _AvatarIntroPageState createState() => _AvatarIntroPageState();
 }
@@ -16,6 +17,53 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
   bool _white = false;
   double _selectedSliderOne = 0;
   double _selectedSliderTwo = 0;
+
+  List<Top> miTop = [
+    Top.eyepatch(),
+    Top.hat(),
+    Top.hijab(),
+    Top.longHairBigHair(),
+    Top.longHairBob(),
+    Top.longHairBun(),
+    Top.longHairCurly(),
+    Top.longHairCurvy(),
+    Top.longHairDreads(),
+    Top.longHairFrida(),
+    Top.longHairFro(),
+    Top.longHairFroBand(),
+    Top.longHairMiaWallace(),
+    Top.longHairNotTooLong(),
+    Top.longHairShavedSides(),
+    Top.longHairStraight(),
+    Top.longHairStraight2(),
+    Top.longHairStraightStrand(),
+    Top.noHair(),
+    Top.shortHairDreads01()
+  ];
+
+
+  List<String> miList = [
+    Top.eyepatch().pieces?.first.toString(),
+    Top.hat().pieces?.first.toString().toString(),
+    Top.hijab().pieces?.first.toString(),
+    Top.longHairBigHair().pieces?.first.toString(),
+    Top.longHairBob().pieces?.first.toString(),
+    Top.longHairBun().pieces?.first.toString(),
+    Top.longHairCurly().pieces?.first.toString(),
+    Top.longHairCurvy().pieces?.first.toString(),
+    Top.longHairDreads().pieces?.first.toString(),
+    Top.longHairFrida().pieces?.first.toString(),
+    Top.longHairFro().pieces?.first.toString(),
+    Top.longHairFroBand().pieces?.first.toString(),
+    Top.longHairMiaWallace().pieces?.first.toString(),
+    Top.longHairNotTooLong().pieces?.first.toString(),
+    Top.longHairShavedSides().pieces?.first.toString(),
+    Top.longHairStraight().pieces?.first.toString(),
+    Top.longHairStraight2().pieces?.first.toString(),
+    Top.longHairStraightStrand().pieces?.first.toString(),
+    Top.noHair().pieces?.first.toString(),
+    Top.shortHairDreads01().pieces?.first.toString()
+  ];
 
   @override
   void initState() {
@@ -28,6 +76,26 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
     });
   }
 
+  void _randomizeAvatar() =>
+      widget.user.avatar = Avataaar.random(style: Style.transparent);
+
+  int valueIndex() {
+    for (var i = 0; i < miList.length; i++) {
+     if(widget.user.avatar.top.pieces.first != null)
+     {
+       print(widget.user.avatar.top.pieces);
+       if(widget.user.avatar.top.pieces.first.toString().compareTo(miList[i]) == 0)
+       {
+         /*TODO: if pieces[1] != null, Asignar AccesoriesType*/
+         print(widget.user.avatar.top.pieces.first.toString());
+         print(miList[i]);
+         return i;
+       }
+     }
+    }
+    return 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -35,16 +103,16 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
     return Container(
       color: Colors.white,
       child: Stack(
-        alignment: Alignment.topCenter,
+        alignment: Alignment.center,
         children: <Widget>[
           Center(
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 60.0, bottom: 60.0),
+                  padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
                   child: Container(
-                    width: width * 0.4,
-                    height: height * 0.3,
+                    width: width * 0.8,
+                    height: height * 0.4,
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: Container(
@@ -53,10 +121,12 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
                         height: height * 0.25,
                         child: Hero(
                           tag: 'usuario',
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage(
-                                "assets/images/profile/profile_avatar.png"),
-                            backgroundColor: homeBackgroundColor,
+                          child: Container(
+                            child: AvataaarImage(
+                                avatar: widget.user.avatar,
+                                errorImage: Icon(Icons.error),
+                                placeholder: CircularProgressIndicator(),
+                                width: 400),
                           ),
                         ),
                       ),
@@ -93,16 +163,21 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
                             child: AnimatedOpacity(
                               duration: Duration(milliseconds: 400),
                               opacity: _white ? 1.0 : 0.0,
-                                                          child: Slider(
+                              child: Slider(
                                 onChanged: (newValue) {
                                   setState(() {
                                     _selectedSliderOne = newValue;
+                                    widget.user.avatar = widget.user.avatar.copyWith(
+                                      top: miTop[_selectedSliderOne.toInt()]
+                                    );
                                   });
                                 },
+                                label:
+                                    miList[_selectedSliderOne.toInt()].replaceAll(RegExp('Type.'), ''),
                                 value: _selectedSliderOne,
-                                max: 100,
+                                max: miList.length.toDouble(),
                                 min: 0,
-                                divisions: 4,
+                                divisions: miList.length,
                                 activeColor: Colors.blue,
                                 inactiveColor: Colors.white,
                               ),
@@ -127,7 +202,7 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
                             child: AnimatedOpacity(
                               duration: Duration(milliseconds: 400),
                               opacity: _white ? 1.0 : 0.0,
-                                                          child: Slider(
+                              child: Slider(
                                 onChanged: (newValue) {
                                   setState(() {
                                     _selectedSliderOne = newValue;
@@ -161,7 +236,7 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
                             child: AnimatedOpacity(
                               duration: Duration(milliseconds: 400),
                               opacity: _white ? 1.0 : 0.0,
-                                                          child: Slider(
+                              child: Slider(
                                 onChanged: (newValue) {
                                   setState(() {
                                     _selectedSliderOne = newValue;
@@ -176,7 +251,7 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
                               ),
                             ),
                           ),
-                        Material(
+                          Material(
                             child: AnimatedOpacity(
                                 duration: Duration(milliseconds: 400),
                                 opacity: _white ? 1.0 : 0.0,
@@ -195,7 +270,7 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
                             child: AnimatedOpacity(
                               duration: Duration(milliseconds: 400),
                               opacity: _white ? 1.0 : 0.0,
-                                                          child: Slider(
+                              child: Slider(
                                 onChanged: (newValue) {
                                   setState(() {
                                     _selectedSliderOne = newValue;
@@ -210,7 +285,6 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
                               ),
                             ),
                           ),
-                        
                         ],
                       ),
                     ),
@@ -219,6 +293,16 @@ class _AvatarIntroPageState extends State<AvatarIntroPage> {
               ],
             ),
           ),
+          FloatingActionButton(
+            child: Icon(Icons.shuffle),
+            onPressed: () {
+              setState(() {
+               _randomizeAvatar();
+               _selectedSliderOne = valueIndex().toDouble();
+              });
+              
+            },
+          )
         ],
       ),
     );
