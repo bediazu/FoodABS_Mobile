@@ -5,6 +5,7 @@ import 'package:foodabs/colors/global_colors.dart';
 
 import 'package:foodabs/models/classes/user.dart';
 import 'package:foodabs/pages/profile_page.dart';
+import 'package:foodabs/widgets/camera/camera_viewport.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
@@ -16,20 +17,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _page = 0;
+  int _page=1;
   PageController _pageController;
 
   @override
   void initState() {
     super.initState();
 
-    _pageController = PageController();
+    _pageController = PageController(initialPage: _page);
 
+    /*
     _pageController.addListener(() {
       setState(() {
         _page = _pageController.page.toInt();
       });
     });
+    */
   }
 
   @override
@@ -42,9 +45,10 @@ class _HomePageState extends State<HomePage> {
         child: PageView(
           controller: _pageController,
           children: <Widget>[
+            CameraViewPort(),
             Icon(Icons.list),
             Icon(Icons.add),
-            ProfilePage(user: widget.user,),
+            ProfilePage(user: widget.user),
           ],
         ),
       ),
@@ -54,6 +58,11 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: homeBackgroundColor,
         color: Colors.red,
         items: <Widget>[
+          Icon(
+            Icons.camera_alt,
+            size: 30,
+            color: Colors.white,
+          ),
           Icon(
             Icons.list,
             size: 30,
@@ -72,10 +81,12 @@ class _HomePageState extends State<HomePage> {
         ],
         onTap: (index) {
           print(index);
+
           setState(() {
             _page = index;
           });
-          _pageController.animateToPage(_page,
+
+          _pageController.animateToPage(index,
               curve: Curves.decelerate, duration: Duration(milliseconds: 500));
         },
       ),
