@@ -26,6 +26,8 @@ class _HomePageState extends State<HomePage> {
 
     _pageController = PageController(initialPage: _page);
 
+    /// ESTO FUE REMPLAZADO DENTRO
+    /// DE "PAGE VIEW" (LÍNEA 48)
     /*
     _pageController.addListener(() {
       setState(() {
@@ -43,6 +45,11 @@ class _HomePageState extends State<HomePage> {
         width: double.infinity,
         color: homeBackgroundColor,
         child: PageView(
+          onPageChanged: (index) {
+            setState(() {
+              _page = index;
+            });
+          },
           controller: _pageController,
           children: <Widget>[
             CameraViewPort(),
@@ -86,7 +93,7 @@ class _HomePageState extends State<HomePage> {
             _page = index;
           });
 
-          _pageController.animateToPage(index,
+          _pageController.animateToPage(_page,
               curve: Curves.decelerate, duration: Duration(milliseconds: 500));
         },
       ),
